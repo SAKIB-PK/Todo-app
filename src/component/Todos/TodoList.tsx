@@ -1,4 +1,4 @@
-import { StackDivider, VStack } from "@chakra-ui/react";
+import { Badge, StackDivider, VStack } from "@chakra-ui/react";
 import { TodoItem } from "./TodoItem";
 
 interface Todo {
@@ -13,6 +13,14 @@ const TodoList = ({
   todos: Todo[];
   onRemove: (id: number) => void;
 }) => {
+  // if no todos then show a badge
+  if (!todos.length) {
+    return (
+      <Badge colorScheme={"purple"} px="8" py="3" borderRadius="5">
+        Yah! NO Todos
+      </Badge>
+    );
+  }
   return (
     <VStack
       divider={<StackDivider />}

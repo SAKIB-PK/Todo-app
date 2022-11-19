@@ -1,4 +1,4 @@
-import { Heading, IconButton, VStack } from "@chakra-ui/react";
+import { Heading, IconButton, useToast, VStack } from "@chakra-ui/react";
 import { useReducer, useRef } from "react";
 import { FaMoon } from "react-icons/fa";
 import TodoInput from "./TodoInput";
@@ -13,9 +13,21 @@ type actionType =
   | { type: "REMOVE"; id: number };
 
 const Todos = () => {
+  const toast = useToast();
+  const toastIdRef = useRef();
   const onClick = () => {
     if (TodoInputref.current) {
       let text = TodoInputref.current.value;
+      // if input is empty then toast appear
+      if (!text) {
+        let toastRef: string | undefined | number = toastIdRef.current;
+        toastRef = toast({
+          title: `No Content`,
+          status: "error",
+          isClosable: true,
+        });
+        return;
+      }
       dispatch({ type: "ADD", text: text });
       TodoInputref.current.value = "";
     }

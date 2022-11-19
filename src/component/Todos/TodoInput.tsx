@@ -15,7 +15,12 @@ const TodoInput = ({
         ref={TodoInputref}
         placeholder="What to do?"
       />
-      <Button colorScheme="purple" variant="outline" onClick={onClick}>
+      <Button
+        colorScheme="purple"
+        variant="outline"
+        type="submit"
+        onClick={onClick}
+      >
         ADD
       </Button>
     </HStack>
