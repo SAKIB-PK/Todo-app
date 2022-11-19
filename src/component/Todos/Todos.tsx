@@ -1,6 +1,12 @@
-import { Heading, IconButton, useToast, VStack } from "@chakra-ui/react";
-import { useReducer, useRef } from "react";
-import { FaMoon } from "react-icons/fa";
+import {
+  Heading,
+  IconButton,
+  useColorMode,
+  useToast,
+  VStack,
+} from "@chakra-ui/react";
+import { useEffect, useReducer, useRef } from "react";
+import { FaMoon, FaSun } from "react-icons/fa";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 
@@ -15,6 +21,7 @@ type actionType =
 const Todos = () => {
   const toast = useToast();
   const toastIdRef = useRef();
+  let { colorMode, toggleColorMode } = useColorMode();
   const onClick = () => {
     if (TodoInputref.current) {
       let text = TodoInputref.current.value;
@@ -42,16 +49,24 @@ const Todos = () => {
         return state.filter(({ id }) => action.id !== id);
     }
   }
-  const [todos, dispatch] = useReducer(reducer, []);
+  const localSTodo = localStorage.getItem("todos");
+  const [todos, dispatch] = useReducer(
+    reducer,
+    localSTodo ? JSON.parse(localSTodo) : []
+  );
   const TodoInputref = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    localStorage.setItem("todos", JSON.stringify(todos));
+  }, [todos]);
   return (
     <VStack p={4}>
       <IconButton
-        icon={<FaMoon />}
+        icon={colorMode === "light" ? <FaSun /> : <FaMoon />}
         alignSelf="end"
         isRound={true}
         aria-label="Dark Mode"
         size="lg"
+        onClick={toggleColorMode}
       />
       <Heading size="2xl" mb={12} fontWeight="extrabold">
         TODO Application
