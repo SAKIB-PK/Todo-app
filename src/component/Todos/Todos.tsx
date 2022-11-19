@@ -1,4 +1,6 @@
+import { Heading, IconButton, VStack } from "@chakra-ui/react";
 import { useReducer, useRef } from "react";
+import { FaMoon } from "react-icons/fa";
 import TodoInput from "./TodoInput";
 import TodoList from "./TodoList";
 
@@ -31,13 +33,23 @@ const Todos = () => {
   const [todos, dispatch] = useReducer(reducer, []);
   const TodoInputref = useRef<HTMLInputElement>(null);
   return (
-    <div>
+    <VStack p={4}>
+      <IconButton
+        icon={<FaMoon />}
+        alignSelf="end"
+        isRound={true}
+        aria-label="Dark Mode"
+        size="lg"
+      />
+      <Heading size="2xl" mb={12} fontWeight="extrabold">
+        TODO Application
+      </Heading>
       <TodoInput TodoInputref={TodoInputref} onClick={onClick} />
       <TodoList
         todos={todos}
         onRemove={(id: number) => dispatch({ type: "REMOVE", id: id })}
       />
-    </div>
+    </VStack>
   );
 };
 

@@ -1,11 +1,12 @@
+import { ChakraProvider } from "@chakra-ui/react";
 import "./App.css";
 import Todos from "./component/Todos/Todos";
 
 function App() {
   return (
-    <div>
+    <ChakraProvider>
       <Todos />
-    </div>
+    </ChakraProvider>
   );
 }
 
